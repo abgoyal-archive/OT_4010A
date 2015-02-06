@@ -1,0 +1,12 @@
+
+#ifndef __CUSTOM_MEMORYDEVICE__
+#define __CUSTOM_MEMORYDEVICE__
+
+
+
+#define BOARD_ID                MT6575_EVB
+
+#define CS_PART_NUMBER[0]       MT29C4G48MAAHBAAKS_5WT
+#define CS_PART_NUMBER[1]       TYBC0A111557KC
+
+#endif /* __CUSTOM_MEMORYDEVICE__ */

@@ -1,0 +1,113 @@
+
+// -*- c++ -*-
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+//                     O S C L _ Q U E U E
+
+// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+
+#include "oscl_queue.h"
+
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::reserve(uint32 n)
+{
+    if (n > bufsize)
+    {
+        OsclAny* newElems = pOpaqueType->allocate(n * sizeof_T);
+        // transfer old contents using normal operations on (this) queue
+        // constructing new copy in "new__" variables.  Note that data
+        //  won't wrap here, so ok to just use [i++].
+        uint32 i = 0;
+        while (! empty())
+        {
+            pOpaqueType->construct(increment_T(newElems, i++), front());
+            pop();
+        }
+        if (elems)
+        {
+            pOpaqueType->deallocate(elems);
+        }
+        // now set new values
+        elems = newElems;
+        bufsize = n;
+        numelems = i;
+        ifront = 0;
+        irear = numelems > 0 ? ifront + numelems - 1 : bufsize - 1;
+    }
+}
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::construct(Oscl_Opaque_Type_Alloc* aType)
+{
+    numelems = 0;
+    bufsize = 0;
+    elems = NULL;
+    pOpaqueType = aType;
+}
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::construct(Oscl_Opaque_Type_Alloc* aType, uint32 n)
+{
+    numelems = 0;
+    bufsize = n;
+    pOpaqueType = aType;
+    elems = pOpaqueType->allocate(n * sizeof_T);
+}
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::destroy()
+{
+    if (elems)
+    {
+        clear();
+        pOpaqueType->deallocate(elems);
+        elems = NULL;
+        numelems = 0;
+        bufsize = 0;
+    }
+}
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::push(const OsclAny* x)
+{
+    if (numelems == bufsize)
+    {
+        // increase to 1.25x previous size, but at least +4
+        uint32 new_bufsize = bufsize +
+                             ((bufsize > 16) ? bufsize >> 2 : 4);
+        reserve(new_bufsize);
+    }
+    ++irear;
+    if (irear >= bufsize)
+    {
+        irear = 0;      // wrap around
+    }
+
+    pOpaqueType->construct(increment_T(elems, irear), x);
+    numelems++;
+}
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::pop()
+{
+    OSCL_ASSERT(! empty());
+    pOpaqueType->destroy(increment_T(elems, ifront));
+    ifront++;
+    if (ifront >= bufsize)      // (== check is sufficient)
+    {
+        ifront = 0;
+    }
+    numelems--;
+}
+
+OSCL_EXPORT_REF void Oscl_Queue_Base::clear()
+{
+    while (! empty())
+        pop();
+}
+
+
+
+
+
+
+
+
+

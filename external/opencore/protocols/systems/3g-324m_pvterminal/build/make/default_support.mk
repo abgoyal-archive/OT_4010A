@@ -1,0 +1,1 @@
+SRCS += h324/tsc/src/tsc_componentregistry.cpp 

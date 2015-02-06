@@ -1,0 +1,10 @@
+
+#ifndef ARBT_ERROR_H_INCLUDED
+#define ARBT_ERROR_H_INCLUDED
+
+
+#define ARBT_LEAVE(x)
+
+
+#endif //ARBT_ERROR_H_INCLUDED
+

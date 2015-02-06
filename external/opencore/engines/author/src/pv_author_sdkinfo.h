@@ -1,0 +1,11 @@
+
+#ifndef PV_AUTHOR_SDKINFO_H_INCLUDED
+#define PV_AUTHOR_SDKINFO_H_INCLUDED
+
+// This header file is automatically generated at build-time
+// *** OFFICIAL RELEASE INFO -- Will not auto update
+
+#define PVAUTHOR_ENGINE_SDKINFO_LABEL "PVDEV_CORE_RELEASE_6.506.4.1"
+#define PVAUTHOR_ENGINE_SDKINFO_DATE 0x20090312
+
+#endif //PV_AUTHOR_SDKINFO_H_INCLUDED

@@ -1,0 +1,19 @@
+
+#ifndef PVMF_AMRFFPARSER_TUNABLES_H_INCLUDED
+#define PVMF_AMRFFPARSER_TUNABLES_H_INCLUDED
+
+//Default NODE COMMAND vector reserve size
+#define PVMF_AMRFFPARSER_NODE_COMMAND_VECTOR_RESERVE 10
+
+//Starting value for command IDs
+#define PVMF_AMRFFPARSER_NODE_COMMAND_ID_START 6000
+
+#define PVAMRFF_MEDIADATA_POOLNUM 6
+#define PVAMRFF_MEDIADATA_CHUNKSIZE 128
+
+// Temporary until actual max track data size if used.
+#define MAXTRACKDATASIZE    1024
+#define MAX_PORTS           2
+#define NUM_AMR_FRAMES      10
+
+#endif /*PVMF_AMRFFPARSER_TUNABLES_H_INCLUDED*/
